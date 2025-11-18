@@ -1,0 +1,25 @@
+1. Count total rentals.
+SELECT 
+    COUNT(*) AS TotalRentals
+FROM Rentals;
+
+ 2. Average rental duration.
+SELECT
+    ROUND(AVG(julianday(EndDate) - julianday(StartDate)), 2) AS AvgRentalDays
+FROM Rentals;
+
+ 3. Total revenue generated.
+SELECT
+    ROUND(AVG(julianday(EndDate) - julianday(StartDate)), 2) AS AvgRentalDays
+FROM Rentals;
+
+ 4. Count rentals per customer.
+SELECT
+    cu.CustomerID,
+    cu.FullName,
+    COUNT(r.RentalID) AS RentalCount
+FROM Customers cu
+LEFT JOIN Rentals r
+    ON cu.CustomerID = r.CustomerID
+GROUP BY cu.CustomerID, cu.FullName
+ORDER BY RentalCount DESC;

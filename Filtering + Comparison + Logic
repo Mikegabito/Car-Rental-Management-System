@@ -1,0 +1,20 @@
+ 1. Cars older than 2018.
+SELECT *
+FROM Cars
+WHERE Year < 2018;
+
+ 2. Customers with phone numbers starting with '604'.
+SELECT *
+FROM Customers
+WHERE Phone LIKE '604%';
+
+ 3. Rentals longer than 5 days
+SELECT *
+FROM Rentals
+WHERE (julianday(EndDate) - julianday(StartDate)) > 5;
+
+4. Cars with price between 50 and 100.
+SELECT *
+FROM Cars
+WHERE DailyPrice BETWEEN 50 AND 100;
+

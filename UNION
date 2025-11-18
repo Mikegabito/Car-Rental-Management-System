@@ -1,0 +1,13 @@
+ 1. Create a list that returns:
+- All customer emails- All car brands
+ in one combined column using UNION.
+
+SELECT Email AS CombinedValue
+FROM Customers
+
+UNION
+
+SELECT Brand AS CombinedValue
+FROM Cars
+
+ORDER BY CombinedValue;

@@ -1,0 +1,61 @@
+Data From Cars
+INSERT INTO Cars (Brand, Model, Year, DailyPrice) VALUES
+('Toyota',      'Corolla',    2019, 45.00),
+('Toyota',      'RAV4',       2021, 75.00),
+('Honda',       'Civic',      2018, 50.00),
+('BMW',         '3 Series',   2020, 95.00),
+('Tesla',       'Model 3',    2022, 120.00),
+('Ford',        'Focus',      2017, 40.00),
+('Nissan',      'Qashqai',    2019, 65.00),
+('Volkswagen',  'Golf',       2016, 38.00);
+
+Data From Customers
+INSERT INTO Customers (FullName, Email, Phone) VALUES
+('Anna Martinez',    'anna.martinez@example.com',     '6041234567'),
+('Brian Johnson',    'brian.johnson@example.com',     '5557891234'),
+('Carla Rossi',      'carla.rossi@example.com',       '6049876543'),
+('David Smith',      'david.smith@example.com',       '4035552211'),
+('Elena Garcia',     'elena.garcia@example.com',      '5123338899'),
+('Francesco Bianchi','francesco.bianchi@example.com', '6045559988');
+
+Data From Rentals
+-- Rental 1: 5 days, Corolla (45/day)
+INSERT INTO Rentals (CarID, CustomerID, StartDate, EndDate, TotalCost) VALUES
+(1, 1, '2025-10-20', '2025-10-25', 5 * 45.00);
+
+-- Rental 2: 3 days, RAV4 (75/day)
+INSERT INTO Rentals (CarID, CustomerID, StartDate, EndDate, TotalCost) VALUES
+(2, 2, '2025-10-28', '2025-10-31', 3 * 75.00);
+
+-- Rental 3: 7 days, Civic (50/day) – long rental
+INSERT INTO Rentals (CarID, CustomerID, StartDate, EndDate, TotalCost) VALUES
+(3, 3, '2025-11-01', '2025-11-08', 7 * 50.00);
+
+-- Rental 4: 2 days, BMW (95/day)
+INSERT INTO Rentals (CarID, CustomerID, StartDate, EndDate, TotalCost) VALUES
+(4, 4, '2025-09-15', '2025-09-17', 2 * 95.00);
+
+-- Rental 5: 10 days, Model 3 (120/day) – long & expensive
+INSERT INTO Rentals (CarID, CustomerID, StartDate, EndDate, TotalCost) VALUES
+(5, 5, '2025-10-05', '2025-10-15', 10 * 120.00);
+
+-- Rental 6: 4 days, Focus (40/day)
+INSERT INTO Rentals (CarID, CustomerID, StartDate, EndDate, TotalCost) VALUES
+(6, 6, '2025-11-05', '2025-11-09', 4 * 40.00);
+
+-- Rental 7: 6 days, Qashqai (65/day)
+INSERT INTO Rentals (CarID, CustomerID, StartDate, EndDate, TotalCost) VALUES
+(7, 1, '2025-09-25', '2025-10-01', 6 * 65.00);
+
+-- Rental 8: 1 day, Golf (38/day)
+INSERT INTO Rentals (CarID, CustomerID, StartDate, EndDate, TotalCost) VALUES
+(8, 2, '2025-11-10', '2025-11-11', 1 * 38.00);
+
+-- Rental 9: 8 days, BMW (95/day) – more income for same car
+INSERT INTO Rentals (CarID, CustomerID, StartDate, EndDate, TotalCost) VALUES
+(4, 3, '2025-10-10', '2025-10-18', 8 * 95.00);
+
+-- Rental 10: 3 days, RAV4 (75/day) – second rental for same customer
+INSERT INTO Rentals (CarID, CustomerID, StartDate, EndDate, TotalCost) VALUES
+(2, 1, '2025-11-01', '2025-11-04', 3 * 75.00);
+

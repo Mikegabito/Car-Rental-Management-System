@@ -1,0 +1,14 @@
+1. List all cars sorted by DailyPrice descending
+SELECT *
+FROM Cars
+ORDER BY DailyPrice DESC;
+
+ 2. Show all customers whose name contains 'a'
+SELECT *
+FROM Customers
+WHERE FullName LIKE '%a%';
+
+3. Display all rentals with StartDate in the last 30 days
+SELECT *
+FROM Rentals
+WHERE StartDate >= date('now', '-30 day');

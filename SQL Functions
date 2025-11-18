@@ -1,0 +1,29 @@
+1. UPPER() → customer names
+SELECT
+    CustomerID,
+    FullName,
+    UPPER(FullName) AS UppercaseName
+FROM Customers
+ORDER BY CustomerID;
+
+ 2. LENGTH() → car model names
+SELECT
+    CarID,
+    Model,
+    LENGTH(Model) AS ModelLength
+FROM Cars
+ORDER BY CarID;
+
+ 3. DATE calculations → rental length
+SELECT
+    RentalID,
+    StartDate,
+    EndDate,
+    (julianday(EndDate) - julianday(StartDate)) AS RentalDays
+FROM Rentals
+ORDER BY RentalID;
+
+ 4. ROUND() → average rental income rounded to 2 decimals
+SELECT
+    ROUND(AVG(TotalCost), 2) AS AvgRentalIncome
+FROM Rentals;

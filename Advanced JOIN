@@ -1,0 +1,45 @@
+1. SELF JOIN: customers who share the same email domain.
+SELECT
+    c1.CustomerID AS CustomerID1,
+    c1.FullName   AS CustomerName1,
+    c1.Email      AS Email1,
+    c2.CustomerID AS CustomerID2,
+    c2.FullName   AS CustomerName2,
+    c2.Email      AS Email2,
+    SUBSTR(c1.Email, INSTR(c1.Email, '@') + 1) AS Domain
+FROM Customers c1
+INNER JOIN Customers c2
+    ON SUBSTR(c1.Email, INSTR(c1.Email, '@') + 1)
+     = SUBSTR(c2.Email, INSTR(c2.Email, '@') + 1)
+   AND c1.CustomerID < c2.CustomerID      -- avoids duplicates and self-matches
+ORDER BY Domain, CustomerName1, CustomerName2;
+
+ 2. CROSS JOIN: show all possible car/customer combinations.
+SELECT
+    c.CarID,
+    c.Brand,
+    c.Model,
+    cu.CustomerID,
+    cu.FullName AS CustomerName
+FROM Cars c
+CROSS JOIN Customers cu
+ORDER BY c.CarID, cu.CustomerID;
+
+ 3. Multi-table JOIN: Rentals + Cars + Customers with calculated rental duration.
+SELECT
+    r.RentalID,
+    r.StartDate,
+    r.EndDate,
+    (julianday(r.EndDate) - julianday(r.StartDate)) AS RentalDays,
+    r.TotalCost,
+    c.CarID,
+    c.Brand,
+    c.Model,
+    cu.CustomerID,
+    cu.FullName AS CustomerName
+FROM Rentals r
+INNER JOIN Cars c
+    ON r.CarID = c.CarID
+INNER JOIN Customers cu
+    ON r.CustomerID = cu.CustomerID
+ORDER BY r.RentalID;

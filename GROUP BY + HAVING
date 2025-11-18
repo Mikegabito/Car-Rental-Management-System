@@ -1,0 +1,35 @@
+ 1. Total revenue per customer.
+SELECT
+    cu.CustomerID,
+    cu.FullName,
+    SUM(r.TotalCost) AS TotalRevenue
+FROM Customers cu
+INNER JOIN Rentals r
+    ON cu.CustomerID = r.CustomerID
+GROUP BY cu.CustomerID, cu.FullName
+ORDER BY TotalRevenue DESC;
+
+ 2. Customers with more than 2 rentals.
+SELECT
+    cu.CustomerID,
+    cu.FullName,
+    COUNT(r.RentalID) AS RentalCount
+FROM Customers cu
+INNER JOIN Rentals r
+    ON cu.CustomerID = r.CustomerID
+GROUP BY cu.CustomerID, cu.FullName
+HAVING COUNT(r.RentalID) > 2
+ORDER BY RentalCount DESC;
+
+ 3. Cars that generated over 500 total income
+SELECT
+    c.CarID,
+    c.Brand,
+    c.Model,
+    SUM(r.TotalCost) AS TotalIncome
+FROM Cars c
+INNER JOIN Rentals r
+    ON c.CarID = r.CarID
+GROUP BY c.CarID, c.Brand, c.Model
+HAVING SUM(r.TotalCost) > 500
+ORDER BY TotalIncome DESC;

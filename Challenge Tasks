@@ -1,0 +1,114 @@
+ 1. Find the most rented car.
+SELECT
+    c.CarID,
+    c.Brand,
+    c.Model,
+    COUNT(r.RentalID) AS RentalCount
+FROM Cars c
+INNER JOIN Rentals r
+    ON c.CarID = r.CarID
+GROUP BY c.CarID, c.Brand, c.Model
+ORDER BY RentalCount DESC
+LIMIT 1;
+
+ 2. Find customers who generated the highest revenue.
+SELECT
+    cr.CustomerID,
+    cr.FullName,
+    cr.TotalRevenue
+FROM (
+    SELECT
+        cu.CustomerID,
+        cu.FullName,
+        SUM(r.TotalCost) AS TotalRevenue
+    FROM Customers cu
+    INNER JOIN Rentals r
+        ON cu.CustomerID = r.CustomerID
+    GROUP BY cu.CustomerID, cu.FullName
+) AS cr
+WHERE cr.TotalRevenue = (
+    SELECT MAX(inner_cr.TotalRevenue)
+    FROM (
+        SELECT
+            cu2.CustomerID,
+            cu2.FullName,
+            SUM(r2.TotalCost) AS TotalRevenue
+        FROM Customers cu2
+        INNER JOIN Rentals r2
+            ON cu2.CustomerID = r2.CustomerID
+        GROUP BY cu2.CustomerID, cu2.FullName
+    ) AS inner_cr
+);
+
+ 3. List all rentals where the car model name contains the same letter twice.
+SELECT
+    r.RentalID,
+    r.StartDate,
+    r.EndDate,
+    r.TotalCost,
+    c.CarID,
+    c.Brand,
+    c.Model
+FROM Rentals r
+INNER JOIN Cars c
+    ON r.CarID = c.CarID
+WHERE LOWER(c.Model) LIKE '%aa%'
+   OR LOWER(c.Model) LIKE '%bb%'
+   OR LOWER(c.Model) LIKE '%cc%'
+   OR LOWER(c.Model) LIKE '%dd%'
+   OR LOWER(c.Model) LIKE '%ee%'
+   OR LOWER(c.Model) LIKE '%ff%'
+   OR LOWER(c.Model) LIKE '%gg%'
+   OR LOWER(c.Model) LIKE '%hh%'
+   OR LOWER(c.Model) LIKE '%ii%'
+   OR LOWER(c.Model) LIKE '%jj%'
+   OR LOWER(c.Model) LIKE '%kk%'
+   OR LOWER(c.Model) LIKE '%ll%'
+   OR LOWER(c.Model) LIKE '%mm%'
+   OR LOWER(c.Model) LIKE '%nn%'
+   OR LOWER(c.Model) LIKE '%oo%'
+   OR LOWER(c.Model) LIKE '%pp%'
+   OR LOWER(c.Model) LIKE '%qq%'
+   OR LOWER(c.Model) LIKE '%rr%'
+   OR LOWER(c.Model) LIKE '%ss%'
+   OR LOWER(c.Model) LIKE '%tt%'
+   OR LOWER(c.Model) LIKE '%uu%'
+   OR LOWER(c.Model) LIKE '%vv%'
+   OR LOWER(c.Model) LIKE '%ww%'
+   OR LOWER(c.Model) LIKE '%xx%'
+   OR LOWER(c.Model) LIKE '%yy%'
+   OR LOWER(c.Model) LIKE '%zz%'
+ORDER BY r.RentalID;
+
+ 4. Create a view: ActiveRentalsView listing rentals where EndDate >= today.
+
+CREATE VIEW ActiveRentalsView AS
+SELECT
+    r.RentalID,
+    r.CarID,
+    r.CustomerID,
+    r.StartDate,
+    r.EndDate,
+    r.TotalCost
+FROM Rentals r
+WHERE r.EndDate >= date('now');
+to test
+SELECT * FROM ActiveRentalsView; 
+
+ 5. Create a summary table with aggregated statistics (manually computed using INSERT).
+
+CREATE TABLE RentalSummary (
+    SummaryID           INTEGER PRIMARY KEY AUTOINCREMENT,
+    TotalRentals        INTEGER,
+    TotalRevenue        REAL,
+    AvgRevenuePerRental REAL
+);
+
+INSERT INTO RentalSummary (TotalRentals, TotalRevenue, AvgRevenuePerRental)
+SELECT
+    COUNT(*)                 AS TotalRentals,
+    SUM(TotalCost)           AS TotalRevenue,
+    ROUND(AVG(TotalCost), 2) AS AvgRevenuePerRental
+FROM Rentals;
+to test
+SELECT * FROM RentalSummary;

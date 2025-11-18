@@ -1,0 +1,49 @@
+1. List all rentals with car & customer details.
+SELECT
+    r.RentalID,
+    r.StartDate,
+    r.EndDate,
+    r.TotalCost,
+    c.CarID,
+    c.Brand,
+    c.Model,
+    c.Year,
+    c.DailyPrice,
+    cu.CustomerID,
+    cu.FullName,
+    cu.Email,
+    cu.Phone
+FROM Rentals r
+INNER JOIN Cars c
+    ON r.CarID = c.CarID
+INNER JOIN Customers cu
+    ON r.CustomerID = cu.CustomerID
+ORDER BY r.RentalID;
+
+2. Show cars that have never been rented (LEFT JOIN)
+SELECT
+    c.CarID,
+    c.Brand,
+    c.Model,
+    c.Year,
+    c.DailyPrice
+FROM Cars c
+LEFT JOIN Rentals r
+    ON c.CarID = r.CarID
+WHERE r.RentalID IS NULL
+ORDER BY c.CarID;
+
+3. List customers who rented cars priced over 80/day.
+SELECT
+    cu.CustomerID,
+    cu.FullName,
+    cu.Email,
+    cu.Phone
+FROM Rentals r
+INNER JOIN Cars c
+    ON r.CarID = c.CarID
+INNER JOIN Customers cu
+    ON r.CustomerID = cu.CustomerID
+WHERE c.DailyPrice > 80
+GROUP BY cu.CustomerID, cu.FullName, cu.Email, cu.Phone
+ORDER BY cu.CustomerID;
